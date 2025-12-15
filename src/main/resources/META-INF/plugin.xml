@@ -1,0 +1,66 @@
+<!-- Plugin configuration file. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. Must be fully qualified name and remain the same between different versions. -->
+    <id>com.wenguang.ai.assistant</id>
+
+    <!-- Public plugin name, should use Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>WingCode</name>
+
+    <!-- Vendor name or organization ID shown on plugin page. -->
+    <vendor>WingCode</vendor>
+
+    <!-- Plugin description shown on plugin page and in IDE plugin manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside <![CDATA[ ]]> tags.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+WingCode is a comprehensive AI coding assistant that enhances developer productivity through intelligent code completion, AI-powered suggestions, and seamless integration with local models like Ollama. The plugin supports multiple AI providers including OpenAI, Claude, LM Studio, and custom APIs, offering a privacy-first approach where all API calls go directly to your configured provider without data collection. Key features include real-time code completion powered by Tabby, context-aware code suggestions through right-click actions, automated Git commit message generation, and multi-language support with Chinese and English interfaces. Compatible with all JetBrains IDEs such as IntelliJ IDEA, PyCharm, WebStorm, GoLand, and CLion. Perfect for developers who value privacy and want complete control over their coding workflow while leveraging the power of AI assistance.
+
+WingCode 是一款功能全面的 AI 编程助手，通过智能代码补全、AI 驱动的建议和无缝集成本地模型（如 Ollama）来提升开发者的工作效率。插件支持多种 AI 提供商，包括 OpenAI、Claude、LM Studio 和自定义 API，提供隐私优先的方法，所有 API 调用直接发送到您配置的提供商，不收集任何数据。主要功能包括由 Tabby 驱动的实时代码补全、通过右键操作实现的上下文感知代码建议、自动化的 Git 提交信息生成，以及支持中文和英文界面的多语言支持。兼容所有 JetBrains IDE，如 IntelliJ IDEA、PyCharm、WebStorm、GoLand 和 CLion。非常适合重视隐私并希望在利用 AI 辅助功能的同时对编码工作流程拥有完全控制权的开发者。
+]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <idea-version since-build="241.0" until-build="251.*"/>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <!-- Plugin extension points.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="WingCode" secondary="false" icon="/META-INF/pluginIcon.svg" anchor="right" factoryClass="com.wenguang.ai.assistant.toolWindow.ChatToolWindowFactory"/>
+        <notificationGroup id="WingCodeAI" displayType="BALLOON" />
+        <applicationService serviceImplementation="com.wenguang.ai.assistant.settings.AppSettings"/>
+        <applicationConfigurable parentId="tools" instance="com.wenguang.ai.assistant.settings.AppSettingsConfigurable"
+                                 id="com.wenguang.ai.assistant.settings.AppSettingsConfigurable"
+                                 displayName="WingCode"/>
+
+
+        <!-- 代码补全相关扩展 -->
+        <!-- 注册 Tabby 内联补全提供者 -->
+        <inline.completion.provider
+                implementation="com.wenguang.ai.assistant.completion.TabbyInlineCompletionProvider"
+                id="tabbyCompletion"/>
+        <postStartupActivity implementation="com.wenguang.ai.assistant.completion.TabbyAutoTriggerActivity"/>
+        <!-- 注册代码补全状态栏Widget -->
+        <statusBarWidgetFactory id="WingCode.CodeCompletion"
+                                implementation="com.wenguang.ai.assistant.statusbar.CodeCompletionStatusBarWidgetFactory"/>
+    </extensions>
+    
+    <actions>
+        <action id="com.wenguang.ai.assistant.git.GenerateCommitMessageAction"
+                class="com.wenguang.ai.assistant.git.GenerateCommitMessageAction"
+                text="Generate AI Commit Message"
+                icon="/META-INF/pluginIcon.svg"
+                description="Generate Git commit message using AI">
+            <add-to-group group-id="Vcs.MessageActionGroup" anchor="last"/>
+        </action>
+        
+        <!-- AI助手主菜单组 -->
+        <group id="com.wenguang.ai.assistant.menu" class="com.wenguang.ai.assistant.action.AIAssistantActionGroup" popup="true" icon="/META-INF/pluginIcon.svg">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <add-to-group group-id="EditorTabPopupMenu" anchor="first"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+        </group>
+    </actions>
+</idea-plugin>

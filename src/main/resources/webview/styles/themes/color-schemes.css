@@ -1,0 +1,222 @@
+/* ========== 配色方案样式 - 跟随主题变化 ========== */
+
+/* 确保所有token都有基础颜色，防止显示默认的黄色/橙色 */
+.token {
+    background: transparent !important;
+}
+
+/* ========== IDEA Dark 配色方案 - 类似 IntelliJ IDEA 暗色主题 ========== */
+.color-scheme-idea-dark .token:not(.comment):not(.keyword):not(.string):not(.number):not(.function):not(.class-name):not(.property):not(.operator):not(.punctuation):not(.tag) {
+    color: #A9B7C6 !important;
+}
+
+.color-scheme-idea-dark .token.comment,
+.color-scheme-idea-dark .token.prolog,
+.color-scheme-idea-dark .token.doctype,
+.color-scheme-idea-dark .token.cdata {
+    color: #808080 !important;
+}
+
+.color-scheme-idea-dark .token.keyword,
+.color-scheme-idea-dark .token.selector,
+.color-scheme-idea-dark .token.important,
+.color-scheme-idea-dark .token.atrule {
+    color: #CC7832 !important;
+}
+
+.color-scheme-idea-dark .token.string,
+.color-scheme-idea-dark .token.char,
+.color-scheme-idea-dark .token.attr-value,
+.color-scheme-idea-dark .token.regex {
+    color: #6A8759 !important;
+}
+
+.color-scheme-idea-dark .token.number,
+.color-scheme-idea-dark .token.boolean,
+.color-scheme-idea-dark .token.constant {
+    color: #6897BB !important;
+}
+
+.color-scheme-idea-dark .token.function,
+.color-scheme-idea-dark .token.class-name,
+.color-scheme-idea-dark .token.builtin {
+    color: #FFC66D !important;
+}
+
+.color-scheme-idea-dark .token.property,
+.color-scheme-idea-dark .token.attr-name,
+.color-scheme-idea-dark .token.variable {
+    color: #A9B7C6 !important;
+}
+
+.color-scheme-idea-dark .token.operator,
+.color-scheme-idea-dark .token.punctuation {
+    color: #A9B7C6 !important;
+}
+
+.color-scheme-idea-dark .token.tag,
+.color-scheme-idea-dark .token.namespace {
+    color: #E8A87D !important;
+}
+
+/* ========== IDEA Light 配色方案 - 类似 IntelliJ IDEA 亮色主题 ========== */
+.color-scheme-idea-light .token:not(.comment):not(.keyword):not(.string):not(.number):not(.function):not(.class-name):not(.property):not(.operator):not(.punctuation):not(.tag) {
+    color: #000000 !important;
+}
+
+.color-scheme-idea-light .token.comment,
+.color-scheme-idea-light .token.prolog,
+.color-scheme-idea-light .token.doctype,
+.color-scheme-idea-light .token.cdata {
+    color: #808080 !important;
+}
+
+.color-scheme-idea-light .token.keyword,
+.color-scheme-idea-light .token.selector,
+.color-scheme-idea-light .token.important,
+.color-scheme-idea-light .token.atrule {
+    color: #0000FF !important;
+}
+
+.color-scheme-idea-light .token.string,
+.color-scheme-idea-light .token.char,
+.color-scheme-idea-light .token.attr-value,
+.color-scheme-idea-light .token.regex {
+    color: #008000 !important;
+}
+
+.color-scheme-idea-light .token.number,
+.color-scheme-idea-light .token.boolean,
+.color-scheme-idea-light .token.constant {
+    color: #09885A !important;
+}
+
+.color-scheme-idea-light .token.function,
+.color-scheme-idea-light .token.class-name,
+.color-scheme-idea-light .token.builtin {
+    color: #795E26 !important;
+}
+
+.color-scheme-idea-light .token.property,
+.color-scheme-idea-light .token.attr-name,
+.color-scheme-idea-light .token.variable {
+    color: #001080 !important;
+}
+
+.color-scheme-idea-light .token.operator,
+.color-scheme-idea-light .token.punctuation {
+    color: #000000 !important;
+}
+
+.color-scheme-idea-light .token.tag,
+.color-scheme-idea-light .token.namespace {
+    color: #800000 !important;
+}
+
+/* ========== VSCode 配色方案 - 类似 Visual Studio Code 暗色主题 ========== */
+.color-scheme-vscode .token:not(.comment):not(.keyword):not(.string):not(.number):not(.function):not(.class-name):not(.property):not(.operator):not(.punctuation):not(.tag) {
+    color: #9CDCFE !important;
+}
+
+.color-scheme-vscode .token.comment,
+.color-scheme-vscode .token.prolog,
+.color-scheme-vscode .token.doctype,
+.color-scheme-vscode .token.cdata {
+    color: #6A9955 !important;
+}
+
+.color-scheme-vscode .token.keyword,
+.color-scheme-vscode .token.selector,
+.color-scheme-vscode .token.important,
+.color-scheme-vscode .token.atrule {
+    color: #C586C0 !important;
+}
+
+.color-scheme-vscode .token.string,
+.color-scheme-vscode .token.char,
+.color-scheme-vscode .token.attr-value,
+.color-scheme-vscode .token.regex {
+    color: #CE9178 !important;
+}
+
+.color-scheme-vscode .token.number,
+.color-scheme-vscode .token.boolean,
+.color-scheme-vscode .token.constant {
+    color: #B5CEA8 !important;
+}
+
+.color-scheme-vscode .token.function,
+.color-scheme-vscode .token.class-name,
+.color-scheme-vscode .token.builtin {
+    color: #DCDCAA !important;
+}
+
+.color-scheme-vscode .token.property,
+.color-scheme-vscode .token.attr-name,
+.color-scheme-vscode .token.variable {
+    color: #9CDCFE !important;
+}
+
+.color-scheme-vscode .token.operator,
+.color-scheme-vscode .token.punctuation {
+    color: #D4D4D4 !important;
+}
+
+.color-scheme-vscode .token.tag,
+.color-scheme-vscode .token.namespace {
+    color: #569CD6 !important;
+}
+
+/* ========== Sublime Text 配色方案 - 类似 Sublime Text 暗色主题 ========== */
+.color-scheme-sublime-text .token:not(.comment):not(.keyword):not(.string):not(.number):not(.function):not(.class-name):not(.property):not(.operator):not(.punctuation):not(.tag) {
+    color: #DCDCDC !important;
+}
+
+.color-scheme-sublime-text .token.comment,
+.color-scheme-sublime-text .token.prolog,
+.color-scheme-sublime-text .token.doctype,
+.color-scheme-sublime-text .token.cdata {
+    color: #5F5A60 !important;
+}
+
+.color-scheme-sublime-text .token.keyword,
+.color-scheme-sublime-text .token.selector,
+.color-scheme-sublime-text .token.important,
+.color-scheme-sublime-text .token.atrule {
+    color: #C792EA !important;
+}
+
+.color-scheme-sublime-text .token.string,
+.color-scheme-sublime-text .token.char,
+.color-scheme-sublime-text .token.attr-value,
+.color-scheme-sublime-text .token.regex {
+    color: #C3E88D !important;
+}
+
+.color-scheme-sublime-text .token.number,
+.color-scheme-sublime-text .token.boolean,
+.color-scheme-sublime-text .token.constant {
+    color: #F78C6C !important;
+}
+
+.color-scheme-sublime-text .token.function,
+.color-scheme-sublime-text .token.class-name,
+.color-scheme-sublime-text .token.builtin {
+    color: #FFCB6B !important;
+}
+
+.color-scheme-sublime-text .token.property,
+.color-scheme-sublime-text .token.attr-name,
+.color-scheme-sublime-text .token.variable {
+    color: #82AAFF !important;
+}
+
+.color-scheme-sublime-text .token.operator,
+.color-scheme-sublime-text .token.punctuation {
+    color: #89DDFF !important;
+}
+
+.color-scheme-sublime-text .token.tag,
+.color-scheme-sublime-text .token.namespace {
+    color: #F07178 !important;
+}

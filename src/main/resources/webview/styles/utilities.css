@@ -1,0 +1,384 @@
+/* ========== 工具样式 ========== */
+
+/* ========== 滚动条隐藏样式 ========== */
+
+/* 强制隐藏所有滚动条 - 最高优先级保障 */
+* {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+*::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+}
+
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-corner {
+    display: none !important;
+}
+
+/* 确保所有可能的滚动元素都被覆盖 */
+body, html, div, textarea, pre, code {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+body::-webkit-scrollbar,
+html::-webkit-scrollbar,
+div::-webkit-scrollbar,
+textarea::-webkit-scrollbar,
+pre::-webkit-scrollbar,
+code::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* 彻底隐藏代码块滚动条 */
+.code-block pre {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 和 Edge */
+}
+
+.code-block pre::-webkit-scrollbar {
+    display: none !important; /* Chrome, Safari, Opera */
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+}
+
+.code-block pre::-webkit-scrollbar-track {
+    display: none !important;
+}
+
+.code-block pre::-webkit-scrollbar-thumb {
+    display: none !important;
+}
+
+.code-block pre::-webkit-scrollbar-corner {
+    display: none !important;
+}
+
+/* 当代码内容较窄时，优先使用换行而不是滚动 */
+@media (max-width: 600px) {
+    .code-block pre code {
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .code-block pre::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    /* 隐藏所有可能的滚动条和进度条 */
+    *::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    * {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+    }
+
+    .spinner {
+        display: none !important;
+    }
+
+    .loading, .progress-bar, .progress-indicator {
+        display: none !important;
+    }
+}
+
+/* 当插件窗口过窄时彻底隐藏所有滚动条和进度条 */
+@media (max-width: 400px) {
+    /* 全局隐藏所有滚动条 */
+    * {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+    }
+
+    *::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
+    }
+
+    *::-webkit-scrollbar-track,
+    *::-webkit-scrollbar-thumb,
+    *::-webkit-scrollbar-corner {
+        display: none !important;
+    }
+
+    /* 隐藏底部和右侧的IDEA进度条 */
+    body::after,
+    body::before,
+    html::after,
+    html::before {
+        display: none !important;
+    }
+
+    /* 隐藏可能的IDEA UI进度指示器 */
+    [class*="progress"],
+    [class*="Progress"],
+    [id*="progress"],
+    [id*="Progress"] {
+        display: none !important;
+    }
+
+    /* 确保聊天容器占满可用空间 */
+    .chat-container {
+        height: calc(100vh - 44px - 80px) !important;
+    }
+
+    /* 优化工具栏在窄屏下的显示 */
+    .top-toolbar {
+        padding: 4px 8px;
+        min-height: 36px;
+    }
+
+    .custom-select {
+        width: 180px;
+        min-width: 180px;
+        max-width: 200px;
+    }
+
+    .toolbar-button {
+        width: 26px;
+        height: 26px;
+    }
+
+    .toolbar-buttons {
+        gap: 6px;
+    }
+}
+
+/* 针对可能的动态添加的元素 */
+[class*="scroll"]::-webkit-scrollbar,
+[id*="scroll"]::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* ========== Prism覆盖样式 ========== */
+
+/* 字体渲染覆盖样式 */
+code[class*="language-"],
+pre[class*="language-"] {
+    text-shadow: none !important;
+    font-family: monospace !important;
+}
+
+/* 只修复背景问题，不影响颜色 */
+.token.operator,
+.token.keyword,
+.token.punctuation,
+.token.important {
+    background: transparent !important;
+}
+
+/* Prism覆盖样式，解决像素化问题 */
+code[class*="language-"],
+pre[class*="language-"] {
+    font-family: monospace;
+    text-shadow: none !important;
+    background: none;
+}
+
+/* 修复特定token的灰色背景问题 */
+.token.operator,
+.token.entity,
+.token.url,
+.token.variable,
+.token.constant,
+.token.property,
+.token.regex,
+.token.inserted,
+.token.important,
+.token.bold,
+.token.keyword {
+    background: transparent !important;
+    color: inherit;
+    font-weight: normal;
+}
+
+/* ========== 响应式样式 ========== */
+@media (max-width: 600px) {
+    .chat-container {
+        padding: 10px 5px;
+    }
+
+    .message-content {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .input-container {
+        padding: 8px 12px;
+    }
+
+    .input-box {
+        font-size: 12px;
+        padding: 12px 45px 12px 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .top-toolbar {
+        padding: 4px 8px;
+    }
+
+    .chat-container {
+        padding: 8px 4px;
+    }
+
+    .input-container {
+        padding: 6px 10px;
+    }
+}
+
+/* ========== 禁用浏览器默认行为样式 ========== */
+
+/* 禁用所有元素的选中高亮 */
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* 只允许输入框和可编辑内容选中 */
+input, textarea, [contenteditable="true"], .message-content {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+/* 禁用右键菜单 */
+body {
+    -webkit-context-menu: none;
+    context-menu: none;
+}
+
+/* 移除链接和按钮的outline */
+a, button, input, textarea, select {
+    outline: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* 原生应用风格的光标 */
+body {
+    cursor: default;
+}
+
+button, .toolbar-button, .copy-button {
+    cursor: pointer;
+}
+
+input, textarea {
+    cursor: text;
+}
+
+/* 移除浏览器默认的焦点样式 */
+*:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* 禁用拖拽 */
+* {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+/* 只允许输入框拖拽 */
+input, textarea {
+    -webkit-user-drag: auto;
+    -khtml-user-drag: auto;
+    -moz-user-drag: auto;
+    -o-user-drag: auto;
+    user-drag: auto;
+}
+
+/* 隐藏 WebKit 浏览器的滚动条 */
+.input-box::-webkit-scrollbar {
+    display: none;
+}
+
+/* 选择样式优化 - 禁用浏览器默认的拖拽高亮，但保留文本选择 */
+*:not(.message-content):not(.message-content *):not(.code-block):not(.code-block *):not(.input-box):not(textarea)::selection {
+    background: transparent !important;
+}
+
+/* 允许AI消息内容的文本选择 */
+.message-content,
+.message-content *,
+.code-block,
+.code-block *,
+.input-box,
+textarea {
+    user-select: text !important;
+}
+
+/* 隐藏文件选择器滚动条 */
+.select-items::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+}
+
+/* ========== Prism主题切换优化 ========== */
+
+/* 暗色模式下输入框和下拉框边框优化 */
+[data-theme="dark"] .input-box {
+    border-color: #525659 !important;
+}
+
+[data-theme="dark"] .select-selected {
+    border-color: #525659 !important;
+}
+
+[data-theme="dark"] .select-items {
+    border-color: #525659 !important;
+}
+
+[data-theme="dark-old"] .input-box {
+    border-color: #6B6E72 !important;
+}
+
+[data-theme="dark-old"] .select-selected {
+    border-color: #6B6E72 !important;
+}
+
+[data-theme="dark-old"] .select-items {
+    border-color: #6B6E72 !important;
+}
+
+/* ========== 原生应用风格的焦点指示 ========== */
+.input-box:focus,
+.select-selected:focus,
+.toolbar-button:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.3) !important;
+}
+
+.input-box:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 1px var(--primary-color) !important;
+}

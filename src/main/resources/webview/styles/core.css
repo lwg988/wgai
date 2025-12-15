@@ -1,0 +1,796 @@
+/* ========== 聊天容器滚动条样式 ========== */
+.chat-container {
+    scrollbar-width: auto !important;
+    scrollbar-color: #4E4E50 transparent !important;
+}
+
+/* Webkit滚动条样式（Chrome/Safari/Edge） */
+.chat-container::-webkit-scrollbar {
+    width: 4px !important;
+    display: block !important;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: rgba(78, 78, 80, 0.6) !important;
+    border-radius: 2px !important;
+    border: none !important;
+    background-clip: padding-box !important;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(78, 78, 80, 0.8) !important;
+}
+
+.chat-container::-webkit-scrollbar-thumb:active {
+    background-color: rgba(78, 78, 80, 1) !important;
+}
+
+/* ========== CSS变量定义 ========== */
+:root {
+    /* 亮色主题变量 */
+    --background-color: #f7f8fa;
+    --text-color: #333;
+    --border-color: #d9d9d9;
+    --primary-color: #2965D8;
+    --primary-hover-color: #1E4FB5;
+    --input-bg-color: #ffffff;
+    --message-user-bg: #1976d2;
+    --message-user-color: #ffffff;
+    --message-ai-bg: #f0f0f0;
+    --message-ai-color: #333;
+    --think-bg-color: #f9f9f9;
+    --think-border-color: #e0e0e0;
+    --think-text-color: #666;
+    --think-header-bg: #f2f2f2;
+    --think-header-color: #666;
+    --code-bg-color: #f5f5f5;
+    --code-header-bg: #e8e8e8;
+    --code-header-color: #333;
+    --scrollbar-thumb: #c1c1c1;
+    --scrollbar-track: #f1f1f1;
+    --disabled-color: #d9d9d9;
+    --toolbar-bg: #ffffff;
+    --toolbar-border: #e8e8e8;
+    /* 文件引用相关颜色 */
+    --file-ref-bg: #f0f0f0;
+    --file-ref-border: #d9d9d9;
+    --file-ref-text: #333;
+    --file-ref-close-hover: #E74C3C;
+    --file-selector-bg: #ffffff;
+    --file-selector-border: #d9d9d9;
+    --file-selector-item-hover: #f5f5f5;
+    --message-file-ref-bg: rgba(0, 0, 0, 0.05);
+    --message-file-ref-border: rgba(0, 0, 0, 0.1);
+    --message-file-ref-text: var(--text-color);
+}
+
+[data-theme="dark"] {
+    /* 新版IDEA暗色主题变量（默认暗色主题）- 基于新版IDEA */
+    --background-color: #2B2D30;
+    --text-color: #BBBBBB;
+    --border-color: #323335;
+    --primary-color: #2965D8;
+    --primary-hover-color: #4A8EF0;
+    --input-bg-color: #2B2D30;
+    --message-user-bg: #1976d2;
+    --message-user-color: #ffffff;
+    --message-ai-bg: #313335;
+    --message-ai-color: #BBBBBB;
+    --think-bg-color: #313335;
+    --think-border-color: #323335;
+    --think-text-color: #BBBBBB;
+    --think-header-bg: #2B2D30;
+    --think-header-color: #BBBBBB;
+    --code-bg-color: #1E1F22;
+    --code-header-bg: #2B2D30;
+    --code-header-color: #BBBBBB;
+    --scrollbar-thumb: #4E5157;
+    --scrollbar-track: #2B2D30;
+    --disabled-color: #6F737A;
+    --toolbar-bg: #2B2D30;
+    --toolbar-border: #323335;
+    /* 文件引用相关颜色 */
+    --file-ref-bg: #313335;
+    --file-ref-border: #444648;
+    --file-ref-text: #BBBBBB;
+    --file-ref-close-hover: #E74C3C;
+    --file-selector-bg: #2B2D30;
+    --file-selector-border: #323335;
+    --file-selector-item-hover: #3E4043;
+    --message-file-ref-bg: rgba(255, 255, 255, 0.15);
+    --message-file-ref-border: rgba(255, 255, 255, 0.25);
+    --message-file-ref-text: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark-old"] {
+    /* 旧版IDEA暗色主题变量 - 基于旧版IDEA的#3c3f41色系 */
+    --background-color: #3c3f41;
+    --text-color: #BBBBBB;
+    --border-color: #515658;
+    --primary-color: #2965D8;
+    --primary-hover-color: #4A8EF0;
+    --input-bg-color: #3c3f41;
+    --message-user-bg: #1976d2;
+    --message-user-color: #ffffff;
+    --message-ai-bg: #4b4f52;
+    --message-ai-color: #BBBBBB;
+    --think-bg-color: #4b4f52;
+    --think-border-color: #515658;
+    --think-text-color: #BBBBBB;
+    --think-header-bg: #3c3f41;
+    --think-header-color: #BBBBBB;
+    --code-bg-color: #2e3133;
+    --code-header-bg: #3c3f41;
+    --code-header-color: #BBBBBB;
+    --scrollbar-thumb: #5a5e62;
+    --scrollbar-track: #3c3f41;
+    --disabled-color: #707479;
+    --toolbar-bg: #3c3f41;
+    --toolbar-border: #515658;
+    /* 文件引用相关颜色 */
+    --file-ref-bg: #4b4f52;
+    --file-ref-border: #5a5e62;
+    --file-ref-text: #BBBBBB;
+    --file-ref-close-hover: #E74C3C;
+    --file-selector-bg: #3c3f41;
+    --file-selector-border: #515658;
+    --file-selector-item-hover: #4e5357;
+    --message-file-ref-bg: rgba(255, 255, 255, 0.15);
+    --message-file-ref-border: rgba(255, 255, 255, 0.25);
+    --message-file-ref-text: rgba(255, 255, 255, 0.9);
+}
+
+/* ========== 全局基础样式 ========== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 恢复系统字体 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s, color 0.3s;
+    /* 原生应用风格 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* ========== 聊天容器样式 ========== */
+.chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 10px;
+    scroll-behavior: auto; /* 改为自动滚动，更快速 */
+    position: relative;
+}
+
+/* ========== 欢迎/空状态界面 ========== */
+.welcome-empty-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    pointer-events: none;
+}
+
+.welcome-content {
+    text-align: center;
+    max-width: 700px;
+    width: 100%;
+    pointer-events: auto;
+    position: relative;
+}
+
+.welcome-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 40px;
+    letter-spacing: 0.3px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.welcome-input-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.welcome-input-box {
+    padding: 15px 210px 15px 16px;
+}
+
+/* 发送按钮内的SVG样式 */
+.send-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ========== 消息样式 ========== */
+.chat-message {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-message {
+    align-items: flex-end;
+}
+
+.ai-message {
+    align-items: flex-start;
+}
+
+/* ========== 消息内容样式 ========== */
+.message-content {
+    padding: 8px 12px;
+    border-radius: 6px;
+    max-width: 98%;
+    word-break: break-word;
+    line-height: 1.5;
+    font-size: 13px;
+    /* 原生应用风格 */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.user-message .message-content {
+    background-color: var(--message-user-bg);
+    color: var(--message-user-color);
+}
+
+.ai-message .message-content {
+    background-color: var(--message-ai-bg);
+    color: var(--message-ai-color);
+    max-width: 100%;
+}
+
+/* ========== 思考详情样式 ========== */
+.thinking-details {
+    margin: 10px 0;
+    border: 1px solid var(--think-border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: var(--think-bg-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* ========== 流式输出游标样式 ========== */
+.streaming-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1.2em;
+    background-color: var(--primary-color);
+    margin-left: 2px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 49% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0;
+    }
+}
+
+.thinking-details summary {
+    padding: 10px 12px;
+    background-color: var(--think-header-bg);
+    color: var(--think-header-color);
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+    position: relative;
+    outline: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+/* 移除原生marker */
+.thinking-details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* 添加自定义箭头 */
+.thinking-details summary::before {
+    content: "▶";
+    font-size: 0.8em;
+    margin-right: 8px;
+    transition: transform 0.3s;
+}
+
+.thinking-details[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.thinking-content {
+    padding: 12px 16px;
+    background-color: var(--think-bg-color);
+    color: var(--think-text-color);
+    white-space: pre-wrap;
+    line-height: 1.5;
+    font-size: 0.95em;
+    border-top: 1px solid var(--think-border-color);
+}
+
+/* ========== 输入容器样式 ========== */
+.input-container {
+    position: relative;
+    padding: 12px 16px;
+    background-color: var(--input-bg-color);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 欢迎界面显示时隐藏底部输入框 */
+.welcome-empty-state ~ .input-container {
+    display: none !important;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+
+/* ========== 输入框样式 ========== */
+.input-box {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 15px 50px 40px 12px;
+    font-size: 13px;
+    outline: none;
+    resize: none;
+    min-height: 100px;
+    height: 100px;
+    font-family: inherit;
+    line-height: 1.4;
+    overflow-y: auto;
+    max-height: 120px;
+    transition: border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    box-sizing: border-box;
+    /* 原生应用风格 */
+    -webkit-font-smoothing: antialiased;
+    /* 隐藏滚动条但保持滚动功能 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.input-box:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+/* ========== 发送按钮样式 ========== */
+.send-button {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: transparent;
+    color: var(--text-color);
+    border: none;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.send-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.send-button:hover {
+    background-color: var(--border-color);
+    color: var(--text-color);
+    transform: none; /* 移除缩放效果 */
+}
+
+.send-button:active {
+    background-color: var(--primary-color);
+    color: white;
+    transform: none; /* 移除缩放效果 */
+}
+
+.send-button:disabled {
+    background-color: transparent;
+    color: var(--disabled-color);
+    cursor: not-allowed;
+}
+
+.send-button.stop-button {
+    background-color: #d93025;
+    color: white;
+}
+
+.send-button.stop-button:hover {
+    background-color: #b52d20;
+    color: white;
+    transform: scale(1.05);
+}
+
+.send-button.stop-button:active {
+    background-color: #a02622;
+    transform: scale(0.95);
+}
+
+/* ========== 流光动画 ========== */
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========== 下拉选择器样式 ========== */
+.custom-select {
+    position: relative;
+    width: 210px;
+    font-size: 12px;
+    z-index: 1000;
+}
+
+/* 输入框内的模型选择器样式 */
+.input-model-select {
+    position: absolute;
+    bottom: 8px;
+    right: 50px;
+    /* 自适应宽度 */
+    width: auto;
+    min-width: 120px;
+    max-width: 200px;
+    z-index: 10;
+}
+
+.input-model-select .select-selected {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    border-radius: 4px;
+    padding: 6px 20px 6px 8px;
+    cursor: pointer;
+    user-select: none;
+    min-height: 18px;
+    height: 28px;
+    line-height: 18px;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    /* 自适应宽度 */
+    min-width: 120px;
+    max-width: 100%;
+    /* 文本居左 */
+    text-align: left;
+    white-space: normal;
+    overflow: visible;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.input-model-select .select-selected:hover {
+    background: var(--border-color);
+}
+
+/* 模型选择器箭头朝上 */
+.input-model-select .select-selected:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-color: var(--text-color) transparent transparent transparent;
+    transform: translateY(-25%);
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-model-select .select-selected.select-arrow-active:after {
+    transform: translateY(-75%) rotate(180deg);
+}
+
+.select-selected {
+    background: var(--input-bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    padding: 7px 20px 7px 8px;
+    cursor: pointer;
+    user-select: none;
+    min-height: 18px;
+    height: 28px;
+    line-height: 18px;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    /* 自适应宽度，最小宽度120px */
+    min-width: 120px;
+    max-width: 100%;
+    /* 原生应用风格 - 文本居左 */
+    text-align: left;
+    white-space: normal;
+    overflow: visible;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.provider-icon {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+    /* 确保图片按比例缩放 */
+    object-fit: contain;
+    /* 移除图片的默认边框和间距 */
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 图标占位符样式 */
+.provider-icon-placeholder {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 2px;
+    font-size: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 1;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.selected-model-name, .model-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* 文字左对齐 */
+    text-align: left;
+}
+
+.select-items div {
+    color: var(--text-color);
+    padding: 6px 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 14px;
+    line-height: 1.3;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* 文字左对齐 */
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.select-selected:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-color: var(--text-color) transparent transparent transparent;
+    transform: translateY(-25%);
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.select-selected.select-arrow-active:after {
+    transform: translateY(-75%) rotate(180deg);
+}
+
+.select-selected:hover {
+    border-color: var(--primary-color);
+    background: var(--input-bg-color);
+}
+
+.select-items {
+    position: absolute;
+    background: var(--input-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    max-height: 240px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: none;
+    min-width: 200px;
+    max-width: 280px;
+    /* 隐藏滚动条 */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.input-model-select .select-items {
+    /* 自适应宽度，与选择器宽度一致 */
+    min-width: 120px;
+    max-width: 200px;
+    bottom: calc(100% + 2px);
+    top: auto;
+    left: 0;
+    border: none;
+    border-radius: 6px;
+    background: var(--input-bg-color);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    /* 允许下拉框滚动 */
+    overflow-y: auto;
+    max-height: 240px;
+}
+
+.input-model-select .select-items div:first-child {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.input-model-select .select-items div:last-child {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.select-items div:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.select-items div.selected {
+    background-color: rgba(24, 144, 255, 0.1);
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.select-hide {
+    display: none;
+}
+
+/* ========== 确认对话框样式 ========== */
+.confirm-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    width: 300px;
+    display: none;
+}
+
+.confirm-dialog-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: var(--text-color);
+}
+
+.confirm-dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.confirm-dialog-button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.confirm-cancel {
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.confirm-ok {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* ========== 链接样式优化 ========== */
+.message-content a {
+    color: #FF6B35 !important; /* 橙红色，在黑白背景下都显眼 */
+    text-decoration: underline !important;
+    cursor: pointer !important;
+}
+
+.message-content a:hover {
+    color: #E55A2B !important; /* 悬停时稍微深一点 */
+    text-decoration: underline !important;
+}
+
+/* ========== 原生应用风格优化 ========== */
+.send-button,
+.copy-button,
+.select-selected {
+    transform: translateZ(0); /* 启用硬件加速 */
+    will-change: background-color, border-color; /* 优化动画性能 */
+}
+
+/* 减少动画延迟，更贴近原生应用 */
+* {
+    transition-duration: 0.15s !important;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ========== 选择样式优化 ========== */
+.message-content ::selection,
+.code-block pre code ::selection {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.input-box::selection,
+textarea::selection {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+/* 特定元素的文本选择样式 */
+.message-content ::selection,
+.code-block ::selection,
+.input-box::selection,
+textarea::selection {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}

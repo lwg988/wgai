@@ -1,0 +1,51 @@
+/* ========== 暗色主题链接样式 ========== */
+[data-theme="dark"] .message-content a,
+[data-theme="dark-old"] .message-content a {
+    color: #FF8C69 !important; /* 在暗色背景下用更亮的橙色 */
+}
+
+[data-theme="dark"] .message-content a:hover,
+[data-theme="dark-old"] .message-content a:hover {
+    color: #FFA07A !important;
+}
+
+/* ========== 暗色模式下输入框和下拉框边框优化 ========== */
+/* 让输入框和下拉框在暗色模式下更显眼，但不影响其他元素 */
+
+[data-theme="dark"] .input-box {
+    border-color: #525659 !important;
+}
+
+[data-theme="dark"] .select-selected {
+    border-color: #525659 !important;
+}
+
+[data-theme="dark"] .select-items {
+    border-color: #525659 !important;
+}
+
+[data-theme="dark-old"] .input-box {
+    border-color: #6B6E72 !important;
+}
+
+[data-theme="dark-old"] .select-selected {
+    border-color: #6B6E72 !important;
+}
+
+[data-theme="dark-old"] .select-items {
+    border-color: #6B6E72 !important;
+}
+
+/* ========== 亮色主题下的代码块样式优化 ========== */
+/* 确保亮色主题下代码块有合适的对比度 */
+
+[data-theme="light"] code[class*="language-"],
+[data-theme="light"] pre[class*="language-"] {
+    /* 亮色主题下使用较亮的背景 */
+    background: #f5f5f5 !important;
+    color: #333 !important;
+}
+
+[data-theme="light"] pre[class*="language-"] .token {
+    background: transparent !important;
+}

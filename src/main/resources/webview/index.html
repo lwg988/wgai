@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle"></title>
+
+    <!-- 引入Prism.js核心CSS -->
+    <link rel="stylesheet" href="lib/css/prism.min.css">
+    <!-- 引入暗色主题CSS -->
+    <link rel="stylesheet" href="lib/css/prism-tomorrow.min.css" id="prism-theme">
+    <!-- 引入自定义样式 - 拆分后的CSS文件 -->
+    <link rel="stylesheet" href="styles/core.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/themes/light-dark.css">
+    <link rel="stylesheet" href="styles/themes/color-schemes.css">
+    <link rel="stylesheet" href="styles/themes/chat-backgrounds.css">
+    <link rel="stylesheet" href="styles/utilities.css">
+</head>
+<body>
+    <div class="chat-container" id="chatContainer">
+        <!-- 空状态欢迎界面 -->
+        <div class="welcome-empty-state" id="welcomeEmptyState">
+            <div class="welcome-content">
+                <h1 class="welcome-title" id="welcomeTitle">WingCode</h1>
+                <!-- 文件引用区域 - 欢迎界面版本 -->
+                <div class="file-references" id="welcomeFileReferences" style="display: none;"></div>
+                <div class="input-wrapper" style="max-width: 700px; margin: 0 auto;">
+                    <textarea
+                        class="input-box welcome-input-box"
+                        id="welcomeUserInput"
+                        placeholder=""
+                        onkeydown="handleWelcomeKeyDown(event)"
+                        oninput="handleWelcomeInputChange(this)"
+                    ></textarea>
+                    <!-- 文件引用按钮 - 欢迎界面版本 -->
+                    <button class="at-button" id="welcomeAtButton" onclick="showFileSelector('welcomeUserInput')" title="">
+                        <span class="at-symbol">@</span>
+                    </button>
+                    <!-- 文件选择器 - 欢迎界面版本 -->
+                    <div class="file-selector welcome-file-selector" id="welcomeFileSelector" style="display: none;">
+                        <div class="file-selector-header">
+                            <span id="welcomeFileSelectorTitle"></span>
+                            <button class="file-selector-close" onclick="hideFileSelector()">×</button>
+                        </div>
+                        <div class="file-selector-search">
+                            <input type="text" id="welcomeFileSearchInput" placeholder="" oninput="searchFiles(this.value)">
+                            <button class="file-selector-browse" onclick="browseFiles()" id="welcomeBrowseBtnText"></button>
+                        </div>
+                        <div class="file-selector-results" id="welcomeFileSelectorResults">
+                            <div class="file-selector-loading" id="welcomeFileSelectorLoading"></div>
+                        </div>
+                    </div>
+                    <!-- 模型选择器 - 欢迎界面版本 -->
+                    <div class="custom-select input-model-select welcome-model-select" id="welcomeCustomSelect">
+                        <div class="select-selected" id="welcomeSelectSelected"></div>
+                        <div class="select-items" id="welcomeSelectItems">
+                            <div data-value="" id="welcomeSelectLoading"></div>
+                        </div>
+                    </div>
+                    <button class="send-button welcome-send-button" id="welcomeSendButton" onclick="sendWelcomeMessage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4282FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-container">
+        <!-- 文件引用区域 -->
+        <div class="file-references" id="fileReferences" style="display: none;"></div>
+
+        <div class="input-wrapper">
+            <textarea
+                class="input-box"
+                id="userInput"
+                placeholder=""
+                onkeydown="handleKeyDown(event)"
+                oninput="handleInputChange(this)"
+            ></textarea>
+            <!-- 文件引用按钮 -->
+            <button class="at-button" id="atButton" onclick="showFileSelector('userInput')" title="">
+                <span class="at-symbol">@</span>
+            </button>
+            <!-- 文件选择器 - 输入框版本 -->
+            <div class="file-selector" id="fileSelector" style="display: none;">
+                <div class="file-selector-header">
+                    <span id="fileSelectorTitle"></span>
+                    <button class="file-selector-close" onclick="hideFileSelector()">×</button>
+                </div>
+                <div class="file-selector-search">
+                    <input type="text" id="fileSearchInput" placeholder="" oninput="searchFiles(this.value)">
+                    <button class="file-selector-browse" onclick="browseFiles()" id="browseBtnText"></button>
+                </div>
+                <div class="file-selector-results" id="fileSelectorResults">
+                    <div class="file-selector-loading" id="fileSelectorLoading"></div>
+                </div>
+            </div>
+            <!-- 模型选择器 - 移动到输入框内，发送按钮左侧 -->
+            <div class="custom-select input-model-select" id="customSelect">
+                <div class="select-selected" id="selectSelected"></div>
+                <div class="select-items" id="selectItems">
+                    <div data-value="" id="selectLoading"></div>
+                </div>
+            </div>
+            <button class="send-button" id="sendButton" onclick="sendMessage()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4282FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- 确认对话框 -->
+    <div class="confirm-dialog" id="confirmDialog">
+        <div class="confirm-dialog-title" id="confirmDialogTitle"></div>
+        <div class="confirm-dialog-buttons">
+            <button class="confirm-dialog-button confirm-cancel" id="cancelBtn"></button>
+            <button class="confirm-dialog-button confirm-ok" id="confirmBtn"></button>
+        </div>
+    </div>
+
+    <!-- 历史对话面板 -->
+    <div class="history-panel" id="historyPanel" style="display: none;">
+        <div class="history-header">
+            <h3 id="historyTitle"></h3>
+            <button class="history-close" onclick="hideHistoryPanel()">×</button>
+        </div>
+        <div class="history-content">
+            <div class="history-list" id="historyList">
+                <div class="history-empty" id="historyEmpty"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 历史对话遮罩 -->
+    <div class="history-overlay" id="historyOverlay" style="display: none;" onclick="hideHistoryPanel()"></div>
+
+
+    <!-- 引入Prism.js核心 -->
+    <script src="lib/js/prism.min.js"></script>
+    <!-- 引入常用语言支持 -->
+    <script src="lib/js/prism-java.min.js"></script>
+    <script src="lib/js/prism-kotlin.min.js"></script>
+    <script src="lib/js/prism-python.min.js"></script>
+    <script src="lib/js/prism-javascript.min.js"></script>
+    <script src="lib/js/prism-typescript.min.js"></script>
+    <script src="lib/js/prism-css.min.js"></script>
+    <script src="lib/js/prism-markup.min.js"></script>
+    <!-- markup-templating插件 (PHP必需的依赖) -->
+    <script src="lib/js/prism-markup-templating.min.js"></script>
+    <script src="lib/js/prism-bash.min.js"></script>
+    <script src="lib/js/prism-sql.min.js"></script>
+    <script src="lib/js/prism-json.min.js"></script>
+    <script src="lib/js/prism-go.min.js"></script>
+    <script src="lib/js/prism-rust.min.js"></script>
+    <script src="lib/js/prism-c.min.js"></script>
+    <script src="lib/js/prism-cpp.min.js"></script>
+    <script src="lib/js/prism-csharp.min.js"></script>
+    <script src="lib/js/prism-swift.min.js"></script>
+    <script src="lib/js/prism-ruby.min.js"></script>
+    <script src="lib/js/prism-scala.min.js"></script>
+    <script src="lib/js/prism-dart.min.js"></script>
+    <script src="lib/js/prism-lua.min.js"></script>
+    <!-- 引入配置文件和标记语言支持 -->
+    <script src="lib/js/prism-yaml.min.js"></script>
+    <script src="lib/js/prism-toml.min.js"></script>
+    <script src="lib/js/prism-docker.min.js"></script>
+    <script src="lib/js/prism-nginx.min.js"></script>
+    <script src="lib/js/prism-markdown.min.js"></script>
+    <script src="lib/js/prism-graphql.min.js"></script>
+    <!-- 引入React相关语法支持 -->
+    <script src="lib/js/prism-jsx.min.js"></script>
+    <script src="lib/js/prism-tsx.min.js"></script>
+    <!-- 引入Markdown解析器 -->
+    <!-- <script src="lib/js/marked.min.js"></script> -->
+    <!-- PHP需要在markup之后加载 -->
+    <script src="lib/js/prism-php.min.js"></script>
+
+    <!-- 引入自定义脚本 - 拆分后的JS文件 -->
+    <script src="js/core.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/messages.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/files.js"></script>
+    <script src="js/models.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/code-selection.js"></script>
+    <script src="js/init.js"></script>
+
+    <script>
+      // 动态设置所有界面文字
+      window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('pageTitle').innerText = window.i18n?.title || 'WingCode';
+        document.title = window.i18n?.title || 'WingCode';
+        document.getElementById('selectSelected').innerText = window.i18n?.loading || 'Loading...';
+        document.getElementById('selectLoading').innerText = window.i18n?.loading || 'Loading...';
+        document.getElementById('welcomeSelectSelected').innerText = window.i18n?.loading || 'Loading...';
+        document.getElementById('welcomeSelectLoading').innerText = window.i18n?.loading || 'Loading...';
+        document.getElementById('userInput').placeholder = window.i18n?.inputPlaceholder || 'Enter your question...';
+        document.getElementById('confirmDialogTitle').innerText = window.i18n?.dialogTitle || 'Are you sure you want to clear all chat history?';
+        document.getElementById('cancelBtn').innerText = window.i18n?.cancel || 'Cancel';
+        document.getElementById('confirmBtn').innerText = window.i18n?.confirm || 'Confirm';
+
+        // 初始化文件选择器文本
+        if (typeof initializeFileSelectorTexts === 'function') {
+          initializeFileSelectorTexts();
+        }
+
+        // 设置历史对话相关文字
+        document.getElementById('historyTitle').innerText = window.i18n?.historyTitle || 'Chat History';
+        document.getElementById('historyEmpty').innerText = window.i18n?.historyEmpty || 'No chat history';
+      });
+    </script>
+</body>
+</html>
